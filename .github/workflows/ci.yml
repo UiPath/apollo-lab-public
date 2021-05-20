@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  GH_NPM_REGISTRY_TOKEN: ${{ secrets.GH_NPM_REGISTRY_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout DUF
+        uses: actions/checkout@v2
+        with:
+          repository: UiPath/dna-ui-framework
+          ref: master
+          token: ${{ secrets.GH_CHECKOUT_TOKEN }}
+          fetch-depth: 0
+
+      - name: Node (LTS)
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+
+      - name: Restore dependencies
+        run: npm ci
+
+      - name: Build Storybook
+        run: npm run build:storybook
+
+      - name: Deploy storybook
+        uses: peaceiris/actions-gh-pages@v3.7.3
+        with:
+          github_token: ${{ github.token }}
+          publish_dir: ./stories/dist
+          force_orphan: true
+          full_commit_message: "chore: update Storybook"
