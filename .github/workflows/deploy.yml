@@ -30,6 +30,9 @@ jobs:
       - name: Restore dependencies
         run: npm ci
 
+      - name: Restore Storybook dependencies
+        run: npm --prefix ./storybook/ ci
+
       - name: Build Storybook
         run: npm run build:storybook
 
@@ -37,6 +40,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3.7.3
         with:
           github_token: ${{ github.token }}
-          publish_dir: ./stories/dist
+          publish_dir: ./storybook/dist
           force_orphan: true
           full_commit_message: "chore: update Storybook"
