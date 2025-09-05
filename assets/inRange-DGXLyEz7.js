@@ -1,0 +1,1 @@
+import{t as o,a as e}from"./toFinite-BIy35DfP.js";var f=Math.max,t=Math.min;function M(n,i,a){return n>=t(i,a)&&n<f(i,a)}function v(n,i,a){return i=o(i),a===void 0?(a=i,i=0):a=o(a),n=e(n),M(n,i,a)}export{v as i};
